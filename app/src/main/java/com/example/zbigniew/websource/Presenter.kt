@@ -1,12 +1,13 @@
 package com.example.zbigniew.websource
 
+import com.example.zbigniew.websource.helpers.ErrorHandler
+import com.example.zbigniew.websource.helpers.ErrorView
 import com.example.zbigniew.websource.model.WebSource
 import com.example.zbigniew.websource.repository.applyTransformerFlowable
 import com.example.zbigniew.websource.repository.local.LocalDataSource
 import com.futuremind.mvpbase.MvpView
 import com.futuremind.mvpbase.RxBasePresenter
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import me.jessyan.progressmanager.ProgressListener
 import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
@@ -54,7 +55,7 @@ constructor(
     }
 
     private fun getFromInternet(url: String): Flowable<WebSource> {
-        return if (url.isNotEmpty()) {
+        return if (url.isNotEmpty() && url != view?.getStringFromRes(R.string.https)) {
             view?.showLoading()
             progressManager.addResponseListener(url, getDownloadListener());
             Flowable.fromCallable { httpClient.newCall(Request.Builder().url(url).build()).execute() }
@@ -84,5 +85,6 @@ constructor(
         fun updateProgress(percent: Int)
         fun showLoading()
         fun emptyUrl()
+        fun getStringFromRes(res: Int): String
     }
 }

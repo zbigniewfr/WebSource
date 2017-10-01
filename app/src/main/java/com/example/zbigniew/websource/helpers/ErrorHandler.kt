@@ -1,6 +1,7 @@
-package com.example.zbigniew.websource
+package com.example.zbigniew.websource.helpers
 
 import android.content.res.Resources
+import com.example.zbigniew.websource.R
 import com.google.gson.GsonBuilder
 import retrofit2.HttpException
 import java.io.IOException

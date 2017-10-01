@@ -1,4 +1,4 @@
-package com.futuremind.omili.repository.local
+package com.example.zbigniew.websource.repository.local
 
 import android.content.Context
 import com.example.zbigniew.websource.repository.local.DbHelper

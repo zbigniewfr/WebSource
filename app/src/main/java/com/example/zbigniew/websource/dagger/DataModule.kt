@@ -2,22 +2,17 @@ package com.example.zbigniew.websource.dagger
 
 import android.content.Context
 import android.content.res.Resources
-import com.example.zbigniew.websource.ErrorHandler
+import com.example.zbigniew.websource.helpers.ErrorHandler
 import com.example.zbigniew.websource.BuildConfig
-import com.futuremind.omili.repository.local.LocalDataProvider
+import com.example.zbigniew.websource.repository.local.LocalDataProvider
 import com.example.zbigniew.websource.repository.local.LocalDataSource
 import dagger.Module
 import dagger.Provides
 import me.jessyan.progressmanager.ProgressManager
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import me.jessyan.progressmanager.body.ProgressResponseBody
-
-
 
 
 @Module

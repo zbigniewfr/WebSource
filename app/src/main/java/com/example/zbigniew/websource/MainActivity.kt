@@ -3,6 +3,7 @@ package com.example.zbigniew.websource
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.zbigniew.websource.model.WebSource
@@ -15,6 +16,10 @@ import javax.inject.Inject
 import android.text.Selection
 import android.text.Editable
 import android.text.TextWatcher
+import com.example.zbigniew.websource.helpers.ResponseError
+import com.example.zbigniew.websource.helpers.hide
+import com.example.zbigniew.websource.helpers.show
+import javax.annotation.Resource
 
 
 class MainActivity : AppCompatActivity(), Presenter.View {
@@ -99,4 +104,6 @@ class MainActivity : AppCompatActivity(), Presenter.View {
     override fun emptyUrl() {
         Toast.makeText(this, getString(R.string.empty_url_error), Toast.LENGTH_SHORT).show()
     }
+
+    override fun getStringFromRes(@StringRes res: Int): String = getString(res)
 }

@@ -1,4 +1,4 @@
-package com.example.zbigniew.websource
+package com.example.zbigniew.websource.helpers
 
 class ResponseError(
         private val error : Error?
@@ -14,9 +14,9 @@ class ResponseError(
     }
 
     constructor(code: Int,
-                msg: String) : this(ResponseError.Error(code,msg))
+                msg: String) : this(Error(code, msg))
 
-    constructor(msg: String) : this(ResponseError.Error(DEFAULT_ERROR_CODE,msg))
+    constructor(msg: String) : this(Error(DEFAULT_ERROR_CODE, msg))
 
     fun getErrorMessage() = error?.msg ?: ""
     fun getErrorCode() = error?.code
