@@ -8,10 +8,16 @@ import com.futuremind.omili.repository.local.LocalDataProvider
 import com.example.zbigniew.websource.repository.local.LocalDataSource
 import dagger.Module
 import dagger.Provides
+import me.jessyan.progressmanager.ProgressManager
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import me.jessyan.progressmanager.body.ProgressResponseBody
+
+
 
 
 @Module
@@ -19,7 +25,11 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient {
+    fun provideProgressManager(): ProgressManager = ProgressManager.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideHttpClient(progressManager: ProgressManager): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -28,7 +38,7 @@ class DataModule {
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(loggingInterceptor)
         }
-        return builder.build()
+        return progressManager.with(builder).build()
     }
 
     @Provides
@@ -42,5 +52,8 @@ class DataModule {
     fun provideErrorHandler(resources: Resources): ErrorHandler {
         return ErrorHandler(resources)
     }
+
+
+
 }
 

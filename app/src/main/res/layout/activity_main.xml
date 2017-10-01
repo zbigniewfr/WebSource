@@ -16,7 +16,8 @@
             android:id="@+id/webAdressEt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.75" />
+            android:layout_weight="0.75"
+            android:inputType="textWebEmailAddress" />
 
         <Button
             android:id="@+id/downloadBtn"
@@ -26,6 +27,14 @@
             android:text="@string/pobierz_btn" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:visibility="gone" />
 
     <ScrollView
         android:layout_width="match_parent"
