@@ -55,6 +55,7 @@ constructor(
 
     private fun getFromInternet(url: String): Flowable<WebSource> {
         return if (url.isNotEmpty()) {
+            view?.showLoading()
             progressManager.addResponseListener(url, getDownloadListener());
             Flowable.fromCallable { httpClient.newCall(Request.Builder().url(url).build()).execute() }
                     .doOnNext {
@@ -67,6 +68,7 @@ constructor(
                         webSource
                     }
         } else {
+            view?.emptyUrl()
             Flowable.empty<WebSource>()
         }
     }
@@ -80,5 +82,7 @@ constructor(
     interface View : MvpView, ErrorView {
         fun showSource(source: WebSource)
         fun updateProgress(percent: Int)
+        fun showLoading()
+        fun emptyUrl()
     }
 }

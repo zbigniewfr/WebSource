@@ -3,4 +3,7 @@
     <string name="pobierz_btn">Pobierz</string>
     <string name="network_error">Network connection error</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="empty_url_error">Url field empty</string>
+    <string name="type_address">Type address</string>
+    <string name="https">https://</string>
 </resources>

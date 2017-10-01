@@ -28,10 +28,10 @@ class LocalDataSource(private val db: BriteDatabase) {
                 .mapToList(DatabaseMapper().WebSourceDatabaseMapper().MAPPER)
                 .toFlowable(BackpressureStrategy.BUFFER)
                 .map {
-                    if(it.size>0) {
+                    if (it.size > 0) {
                         it[it.lastIndex]
-                    }else{
-                        WebSource(1, "")
+                    } else {
+                        WebSource(0, "Empty Database")
                     }
                 }
     }

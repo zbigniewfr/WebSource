@@ -1,22 +1,21 @@
 package com.example.zbigniew.websource
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.zbigniew.websource.model.WebSource
 import com.example.zbigniew.websource.repository.applyTransformerSingle
-import com.futuremind.omili.helpers.hide
-import com.futuremind.omili.helpers.show
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.Response
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import android.text.Selection
+import android.text.Editable
+import android.text.TextWatcher
+
 
 class MainActivity : AppCompatActivity(), Presenter.View {
 
@@ -42,15 +41,32 @@ class MainActivity : AppCompatActivity(), Presenter.View {
     private fun initListener() {
         RxView.clicks(downloadBtn)
                 .subscribe({
-                    progressBar.show()
                     presenter.loadWebPageSource(webAdressEt.text.toString())
                 }, {
                     it.printStackTrace()
                 })
+
+        webAdressEt.addTextChangedListener(object : TextWatcher {
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (!s.toString().startsWith(getString(R.string.https))) {
+                    webAdressEt.setText(getString(R.string.https))
+                    Selection.setSelection(webAdressEt.text, webAdressEt.text.length)
+
+                }
+
+            }
+        })
     }
 
     override fun onError(error: ResponseError) {
-        progressBar.hide()
+        hideLoading()
         Toast.makeText(this, error.getErrorMessage(), Toast.LENGTH_SHORT).show()
     }
 
@@ -65,10 +81,22 @@ class MainActivity : AppCompatActivity(), Presenter.View {
                     .compose(applyTransformerSingle())
                     .subscribe({
                         progressBar.progress = PROGRESS_DEFAULT
-                        progressBar.hide()
+                        hideLoading()
                     }, {
                         it.printStackTrace()
                     })
         }
+    }
+
+    override fun showLoading() {
+        progressBar.show()
+    }
+
+    private fun hideLoading() {
+        progressBar.hide()
+    }
+
+    override fun emptyUrl() {
+        Toast.makeText(this, getString(R.string.empty_url_error), Toast.LENGTH_SHORT).show()
     }
 }
