@@ -8,6 +8,7 @@ import com.example.zbigniew.websource.repository.local.LocalDataSource
 import com.futuremind.mvpbase.MvpView
 import com.futuremind.mvpbase.RxBasePresenter
 import io.reactivex.Flowable
+import io.reactivex.disposables.Disposable
 import me.jessyan.progressmanager.ProgressListener
 import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
@@ -79,6 +80,9 @@ constructor(
         return body?.string()
     }
 
+    fun addDisposable(disposable: Disposable){
+        disposable.registerInPresenter()
+    }
 
     interface View : MvpView, ErrorView {
         fun showSource(source: WebSource)

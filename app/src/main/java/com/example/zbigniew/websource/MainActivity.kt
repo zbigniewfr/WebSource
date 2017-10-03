@@ -42,14 +42,20 @@ class MainActivity : AppCompatActivity(), Presenter.View {
         presenter.loadWebPageSource("")
     }
 
-    @SuppressLint("RxLeakedSubscription")
+    override fun onStop() {
+        super.onStop()
+        presenter.detachView()
+    }
+
     private fun initListener() {
-        RxView.clicks(downloadBtn)
-                .subscribe({
-                    presenter.loadWebPageSource(webAdressEt.text.toString())
-                }, {
-                    it.printStackTrace()
-                })
+        presenter.addDisposable(
+                RxView.clicks(downloadBtn)
+                        .subscribe({
+                            presenter.loadWebPageSource(webAdressEt.text.toString())
+                        }, {
+                            it.printStackTrace()
+                        })
+        )
 
         webAdressEt.addTextChangedListener(object : TextWatcher {
 
